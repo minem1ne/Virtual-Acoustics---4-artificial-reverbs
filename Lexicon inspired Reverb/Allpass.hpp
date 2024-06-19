@@ -1,10 +1,12 @@
 #if !defined(M_Allpass_24)
 #define M_Allpass_24
 
-#include "../../constants.h"
+
 #include "CircularBuffer.hpp"
 
-
+#ifndef AUDIO_SAMPLERATE_HZ
+#define AUDIO_SAMPLERATE_HZ 48000
+#endif
 
 namespace m
 {
@@ -12,7 +14,7 @@ class Allpass
 {
     private:
 
-    CircularBuffer<constants::AUDIO_SAMPLERATE_HZ *100/1000> buffer;
+    CircularBuffer<AUDIO_SAMPLERATE_HZ *100/1000> buffer;
     float time_ms_ = 100, gain_ = 1;
 
 

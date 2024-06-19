@@ -38,7 +38,7 @@ public:
     }
 
 private:
-    float sampleRate_; // Der sampleRate_ Wert muss weiterhin bekannt sein, um readBuffer zu verwenden
+    float sampleRate_;
     size_t readPtr_ = 0;
     size_t writePtr_ = 0;
     float buffer_[BufferSize] = {0};

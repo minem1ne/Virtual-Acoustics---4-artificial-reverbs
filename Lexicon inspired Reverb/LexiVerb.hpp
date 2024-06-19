@@ -3,8 +3,10 @@
 #define M_LEXIVERB_24
 
 
-#include "../../constants.h"
-#include "../utility/EnvelopeFollower.hpp"
+#ifndef AUDIO_SAMPLERATE_HZ
+#define AUDIO_SAMPLERATE_HZ 48000
+#endif
+
 #include "../utility/OnePoleFilter.hpp"
 
 
@@ -89,23 +91,12 @@ class LexiVerb
         preFilter[0].init(15000, constants::AUDIO_SAMPLERATE_HZ);
         preFilter[1].init(15000, constants::AUDIO_SAMPLERATE_HZ);
 
-        // for(int i = 0; i < 2; i++){
-        //     for(int j = 0; j < 4; j++){
-        //     preDiffusionAllpass[i][j].SetTime(preDiffusionAllpassTime[i][j]); // evtl * parameter prediffuse oder so
-        //     preDiffusionAllpass[i][j].SetGain(preDiffusionAllpassGain[i][j]);
-        //     }
-        // }
 
         // Delay Network
 
         networkFilter[0].init(2000, constants::AUDIO_SAMPLERATE_HZ);
         networkFilter[1].init(2000, constants::AUDIO_SAMPLERATE_HZ);
 
-        // for (int i = 0; i < 4; i++)
-        // {
-        //     networkAllpass[i].SetTime(networkAllpassTime[i]);
-        //     networkAllpass[i].SetGain(networkAllpassGain[i]);
-        // }
 
         networkAllpassModulation[0].Init(constants::AUDIO_SAMPLERATE_HZ);
         networkAllpassModulation[0].SetAmp(4);
@@ -116,13 +107,6 @@ class LexiVerb
         networkAllpassModulation[1].SetFreq(0.07);
         networkAllpassModulation[1].SetWaveform(networkAllpassModulation[1].WAVE_SIN);
 
-        // Early Reflections
-
-        // for (int i = 0; i < 4; i++)
-        // {
-        //     earlyRefAllpass[i].SetTime(earlyRefAllpassTime[i]);
-        //     earlyRefAllpass[i].SetGain(earlyRefAllpassGain[i]);
-        // }
     }
 
     void Process(const float &in1, const float &in2, float *out1, float *out2)
@@ -195,22 +179,11 @@ class LexiVerb
         signalEarlyRef[1] -= networkDelay[1].Read(4.1 * size_modifier);
         // signalEarlyRef[1] *= 0.125;
 
-        reverbEnvelopeFollower[0].Process(in1 * (-mix + 1));
-        reverbEnvelopeFollower[1].Process(signalEarlyRef[0] * mix);
 
         *out1 = daisysp::SoftLimit(signalEarlyRef[0]) * mix + in1 * (-mix + 1);
         *out2 = daisysp::SoftLimit(signalEarlyRef[1]) * mix + in2 * (-mix + 1);
     }
 
-    float GetEnvelopeDry()
-    {
-        return reverbEnvelopeFollower[0].GetEnvelope();
-    }
-
-    float GetEnvelopeWet()
-    {
-        return reverbEnvelopeFollower[1].GetEnvelope();
-    }
 
     void SetMix(float drywet)
     {
