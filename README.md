@@ -7,7 +7,7 @@ Further information can be found in each folder of the repository
 
 The reverbs include:
 
-1. Lexicon inspired reverb for the Daisy seed platform in C++
-2. Chris Moor inspired FDN in MAX/MSP
-3. Colorless Differentiabel Feedback Delay Network in Faust
-4. Luff
+1. Chris Moor inspired FDN in MAX/MSP
+2. Colorless Differentiabel Feedback Delay Network in Faust
+3. Hybrid reverb with FDN and convolution in Juice
+4. Lexicon inspired reverb for the Daisy seed platform in C++
