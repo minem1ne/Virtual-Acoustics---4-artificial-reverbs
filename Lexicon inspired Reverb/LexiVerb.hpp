@@ -8,16 +8,17 @@
 #endif
 
 #include "../utility/OnePoleFilter.hpp"
+#include "../utility/CircularBuffer.hpp"
 
 
 #include "daisy_seed.h"
 #include "daisysp.h"
 
-daisysp::DelayLine<float, ((size_t)(0.1f * 48000.0f))> DSY_SDRAM_BSS preDelay[2];
-daisysp::DelayLine<float, ((size_t)(0.1f * 48000.0f))> DSY_SDRAM_BSS preDiffusionAllpass[2][4];
-daisysp::DelayLine<float, ((size_t)(0.3f * 48000.0f))> DSY_SDRAM_BSS networkDelay[4];
-daisysp::DelayLine<float, ((size_t)(0.1f * 48000.0f))> DSY_SDRAM_BSS networkAllpass[4];
-daisysp::DelayLine<float, ((size_t)(0.1f * 48000.0f))> DSY_SDRAM_BSS earlyRefAllpass[4];
+m::CircularBuffer<float, ((size_t)(0.1f * 48000.0f))> DSY_SDRAM_BSS preDelay[2];
+m::CircularBuffer<float, ((size_t)(0.1f * 48000.0f))> DSY_SDRAM_BSS preDiffusionAllpass[2][4];
+m::CircularBuffer<float, ((size_t)(0.3f * 48000.0f))> DSY_SDRAM_BSS networkDelay[4];
+m::CircularBuffer<float, ((size_t)(0.1f * 48000.0f))> DSY_SDRAM_BSS networkAllpass[4];
+m::CircularBuffer<float, ((size_t)(0.1f * 48000.0f))> DSY_SDRAM_BSS earlyRefAllpass[4];
 
 EnvelopeFollower reverbEnvelopeFollower[2];
 
